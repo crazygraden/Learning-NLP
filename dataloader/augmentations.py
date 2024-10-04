@@ -1,8 +1,11 @@
 import numpy as np
 import torch
-import skfuzzy as fuzz
+# import skfuzzy as fuzz
 from sklearn.neighbors import NearestNeighbors
 
+def fuzz_gaussmf(x, mean, sigma):
+    return np.exp(-((x - mean)**2.) / (2 * sigma**2.))
+    
 def DataTransform(sample, config):
     weak_aug = scaling(sample, config.augmentation.jitter_scale_ratio)
     strong_aug = jitter(permutation(sample, max_segments=config.augmentation.max_seg), config.augmentation.jitter_ratio)
@@ -106,8 +109,8 @@ def muti_SMOTE(X, y, k=3):
                 # farthest_neighbor_index = indices[0][np.argmin(distances)]  # 最远邻
                 # nearest_neighbor = X_minority[nearest_neighbor_index]
                 # farthest_neighbor = X_minority[farthest_neighbor_index]
-                fuzzy1 = fuzz.gaussmf(np.argmin(distances), minority_sample, np.std(minority_sample))
-                fuzzy2 = fuzz.gaussmf(np.argmin(distances), minority_sample, np.std(minority_sample))
+                fuzzy1 = fuzz_gaussmf(np.argmin(distances), minority_sample, np.std(minority_sample))
+                fuzzy2 = fuzz_gaussmf(np.argmin(distances), minority_sample, np.std(minority_sample))
                 # 创建合成样本
                 for _ in range(N_per_sample):
                     # neighbor_index = np.random.choice(indices[0])
@@ -132,7 +135,7 @@ def type1fuzzy(x):
     x = (x - min_x) / (max_x - min_x)
     mu = np.mean(x, axis=None)
     sigma = np.std(x)
-    aug_x = fuzz.gaussmf(x, mu, sigma)
+    aug_x = fuzz_gaussmf(x, mu, sigma)
     result = np.zeros_like(x)
     # 使用模糊规则进行去模糊化
     for i in range(len(x)):
@@ -152,8 +155,8 @@ def intervalt2f(x, jitter_ratio):
     sigma1 = np.std(x)
     mu2 = np.mean(add_gaussian_noise(x, mean=0.2, stddev=0.05), axis=None)
     sigma2 = np.std(add_gaussian_noise(x, mean=0.2, stddev=0.05))
-    upper = fuzz.gaussmf(x, mu1, sigma1)
-    lower = fuzz.gaussmf(x, mu2, sigma2)
+    upper = fuzz_gaussmf(x, mu1, sigma1)
+    lower = fuzz_gaussmf(x, mu2, sigma2)
     ## 使用模糊规则进行去模糊化
     for i in range(len(x)):
         upper[i] = upper[i] * x[i]
