@@ -98,50 +98,50 @@ def Trainer(model, temporal_contr_model, model_optimizer, temp_cont_optimizer, t
     df = pd.read_excel(file_path, header=None)
     df.loc[df.shape[0] + 1, 0] = '_'.join([fuzzyi, blocki, instanceloss, data_type, current_time])
     df.loc[df.shape[0], 1] = myresult
-    df.to_excel(file_path, index=False, header=False)
+    # df.to_excel(file_path, index=False, header=False)
 
     # save_pic_cvs(data_type, training_mode, fuzzy, block, instanceloss, train_lossa, train_acca, val_lossa, val_acca)
     # save_picture of train&test loss
-    if training_mode == "self_supervised" and fuzzy_flag =='True':
-        plt.plot(train_lossa, label='Train')
-        # plt.plot(val_loss, label='Valid')
-        plt.title('self_supervised_train loss')
-        plt.xlabel('Epoch')
-        plt.ylabel('Loss')
-        plt.legend()
-        # 保存图像到文件
-        plt.savefig('self_supervised_fuzzyture_train_loss.png')  # 这里你可以指定路径和文件名
-        plt.close()  # 关闭当前图像，以防止后续的绘图覆盖当前图像
-    if training_mode == "self_supervised" and fuzzy_flag !='True':
-        plt.plot(train_lossa, label='Train')
-        # plt.plot(val_loss, label='Valid')
-        plt.title('self_supervised_train loss')
-        plt.xlabel('Epoch')
-        plt.ylabel('Loss')
-        plt.legend()
-        # 保存图像到文件
-        plt.savefig('self_supervised_fuzzyfalse_train_loss.png')  # 这里你可以指定路径和文件名
-        plt.close()  # 关闭当前图像，以防止后续的绘图覆盖当前图像
-    if training_mode != "self_supervised" and fuzzy_flag != 'True':
-        plt.plot(train_lossa, label='Test')
-        # plt.plot(val_loss, label='Valid')
-        plt.title('train_linear test loss')
-        plt.xlabel('Epoch')
-        plt.ylabel('Loss')
-        plt.legend()
-        # 保存图像到文件
-        plt.savefig('train_linear_fuzzyfalse_test_loss.png')  # 这里你可以指定路径和文件名
-        plt.close()  # 关闭当前图像，以防止后续的绘图覆盖当前图像
-    if training_mode != "self_supervised" and fuzzy_flag == 'True':
-        plt.plot(train_lossa, label='Test')
-        # plt.plot(val_loss, label='Valid')
-        plt.title('train_linear test loss')
-        plt.xlabel('Epoch')
-        plt.ylabel('Loss')
-        plt.legend()
-        # 保存图像到文件
-        plt.savefig('train_linear_fuzzytrue_test_loss.png')  # 这里你可以指定路径和文件名
-        plt.close()  # 关闭当前图像，以防止后续的绘图覆盖当前图像
+    # if training_mode == "self_supervised" and fuzzy_flag =='True':
+    #     plt.plot(train_lossa, label='Train')
+    #     # plt.plot(val_loss, label='Valid')
+    #     plt.title('self_supervised_train loss')
+    #     plt.xlabel('Epoch')
+    #     plt.ylabel('Loss')
+    #     plt.legend()
+    #     # 保存图像到文件
+    #     plt.savefig('self_supervised_fuzzyture_train_loss.png')  # 这里你可以指定路径和文件名
+    #     plt.close()  # 关闭当前图像，以防止后续的绘图覆盖当前图像
+    # if training_mode == "self_supervised" and fuzzy_flag !='True':
+    #     plt.plot(train_lossa, label='Train')
+    #     # plt.plot(val_loss, label='Valid')
+    #     plt.title('self_supervised_train loss')
+    #     plt.xlabel('Epoch')
+    #     plt.ylabel('Loss')
+    #     plt.legend()
+    #     # 保存图像到文件
+    #     plt.savefig('self_supervised_fuzzyfalse_train_loss.png')  # 这里你可以指定路径和文件名
+    #     plt.close()  # 关闭当前图像，以防止后续的绘图覆盖当前图像
+    # if training_mode != "self_supervised" and fuzzy_flag != 'True':
+    #     plt.plot(train_lossa, label='Test')
+    #     # plt.plot(val_loss, label='Valid')
+    #     plt.title('train_linear test loss')
+    #     plt.xlabel('Epoch')
+    #     plt.ylabel('Loss')
+    #     plt.legend()
+    #     # 保存图像到文件
+    #     plt.savefig('train_linear_fuzzyfalse_test_loss.png')  # 这里你可以指定路径和文件名
+    #     plt.close()  # 关闭当前图像，以防止后续的绘图覆盖当前图像
+    # if training_mode != "self_supervised" and fuzzy_flag == 'True':
+    #     plt.plot(train_lossa, label='Test')
+    #     # plt.plot(val_loss, label='Valid')
+    #     plt.title('train_linear test loss')
+    #     plt.xlabel('Epoch')
+    #     plt.ylabel('Loss')
+    #     plt.legend()
+    #     # 保存图像到文件
+    #     plt.savefig('train_linear_fuzzytrue_test_loss.png')  # 这里你可以指定路径和文件名
+    #     plt.close()  # 关闭当前图像，以防止后续的绘图覆盖当前图像
 
 
 def model_train(model, temporal_contr_model, model_optimizer, temp_cont_optimizer, criterion, train_loader, config, device, training_mode):
@@ -223,7 +223,7 @@ def model_evaluate(model, temporal_contr_model, test_dl, decive, training_mode, 
         for data, labels, _, _ in test_dl:
             # each class numbers
             # label_counts = torch.bincount(labels, minlength=config.num_classes)
-            labels = labels.long()
+            data, labels = data.float().to(device), labels.long().to(device)
             # # # 使用 torch.bincount 统计每个值的数量
             # counts = torch.bincount(labels, minlength=config.num_classes)
             # criterion = LDAMLoss(counts.numpy().tolist())
