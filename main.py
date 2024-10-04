@@ -96,10 +96,10 @@ logger.debug("=" * 45)
 # Load datasets
 if args.pot_period == 'None':
     print("not my data")
-    data_path = f"./data/{data_type}"
+    data_path = f"Learning-NLP/data/{data_type}"
 else:
     print('my data')
-    data_path = f"./data/{data_type}/{args.pot_period}"
+    data_path = f"Learning-NLP/data/{data_type}/{args.pot_period}"
 train_dl, valid_dl, test_dl = data_generator(data_path, configs, training_mode)
 logger.debug("Data loaded ...")
 # Load Model
