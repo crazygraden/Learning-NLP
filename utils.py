@@ -92,14 +92,14 @@ def _logger(logger_name, level=logging.DEBUG):
 def copy_Files(destination, data_type):
     destination_dir = os.path.join(destination, "model_files")
     os.makedirs(destination_dir, exist_ok=True)
-    copy("main.py", os.path.join(destination_dir, "main.py"))
-    copy("trainer/trainer.py", os.path.join(destination_dir, "trainer.py"))
-    copy(f"config_files/{data_type}_Configs.py", os.path.join(destination_dir, f"{data_type}_Configs.py"))
-    copy("dataloader/augmentations.py", os.path.join(destination_dir, "augmentations.py"))
-    copy("dataloader/dataloader.py", os.path.join(destination_dir, "dataloader.py"))
-    copy(f"models/model.py", os.path.join(destination_dir, f"model.py"))
-    copy("models/loss.py", os.path.join(destination_dir, "loss.py"))
-    copy("models/TC.py", os.path.join(destination_dir, "TC.py"))
+    copy("Learning-NLP/main.py", os.path.join(destination_dir, "main.py"))
+    copy("Learning-NLP/trainer/trainer.py", os.path.join(destination_dir, "trainer.py"))
+    copy(f"Learning-NLP/config_files/{data_type}_Configs.py", os.path.join(destination_dir, f"{data_type}_Configs.py"))
+    copy("Learning-NLP/dataloader/augmentations.py", os.path.join(destination_dir, "augmentations.py"))
+    copy("Learning-NLP/dataloader/dataloader.py", os.path.join(destination_dir, "dataloader.py"))
+    copy(f"Learning-NLP/models/model.py", os.path.join(destination_dir, f"model.py"))
+    copy("Learning-NLP/models/loss.py", os.path.join(destination_dir, "loss.py"))
+    copy("Learning-NLP/models/TC.py", os.path.join(destination_dir, "TC.py"))
 
 
 # plot picture、save loss and acc in csv、save pictures
