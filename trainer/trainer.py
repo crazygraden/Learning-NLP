@@ -208,7 +208,7 @@ def model_train(model, temporal_contr_model, model_optimizer, temp_cont_optimize
     return total_loss, total_acc
 
 
-def model_evaluate(model, temporal_contr_model, test_dl, decive, training_mode, config):
+def model_evaluate(model, temporal_contr_model, test_dl, device, training_mode, config):
     model.eval()
     temporal_contr_model.eval()
 
